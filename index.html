@@ -5,11 +5,67 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css"/>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Share+Tech+Mono&display=swap">
+    <script src="./scripts/script.js" defer></script>
     <title>Odin Etch-A-Sketch</title>
 </head>
 <body>
     <h1>Eatch-A-Sketch</h1>
     <div id="sketch-field"></div>
-    <div id="settings-field"></div>
+    <div id="settings-field">
+        <div class="setting"
+            name="size">
+            <p class="set-header">field size</p>
+            <input type="range"
+                id="size-slider" 
+                min="1" 
+                max="64"
+                value="16">
+            <span id="size-slider-value"
+                class="setting-value">
+                16
+            </span>
+        </div>
+        <div class="setting"
+            name="color">
+            <p class="set-header">brush color</p>
+            <input id="color-picker"
+                type="color" 
+                value="#333333">
+            <span id="color-picker-value"
+                class="setting-value">
+                #333333
+            </span>
+        </div>
+        <div class="setting"
+            name="color-scheme">
+            <p class="set-header">color-scheme</p>
+            <div id="scheme-selector">
+                <label>
+                    <input type="radio" name="radio" checked="">
+                    <span>standart</span>
+                </label>
+                <label>
+                    <input type="radio" name="radio">
+                    <span>greyscale</span>
+                </label>
+                <label>
+                    <input type="radio" name="radio">
+                    <span>rainbow</span>
+                </label>
+            </div>
+        </div>
+        <div class="setting"
+            name="eraser">
+            <p class="set-header">eraser</p>
+            <button class="button"
+                id="eraser-brush">
+                eraser brush
+            </button>
+            <button class="button"
+                id="reset-field">
+                clean everything
+            </button>
+        </div>
+    </div>
 </body>
 </html>
