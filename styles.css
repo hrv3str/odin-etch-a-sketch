@@ -1,0 +1,13 @@
+/*color variables*/
+:root {
+    --col-white: #ffffff;
+    --col-dark: #333333;
+    --col-light: #e1f4f3;
+    --col-grey: #706c61;
+
+}
+ body {
+    background-color: var(--col-light);
+    font-family: "Share Tech Mono", serif;
+    text-align: center;
+ }
