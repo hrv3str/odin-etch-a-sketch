@@ -4,10 +4,31 @@
     --col-dark: #333333;
     --col-light: #e1f4f3;
     --col-grey: #706c61;
-
 }
- body {
+
+* {
+    border: 1px dotted purple;
+}
+
+body {
     background-color: var(--col-light);
     font-family: "Share Tech Mono", serif;
     text-align: center;
- }
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 97vh;
+}
+
+#sketch-field {
+    width: 80vw;
+    height: 80vw;
+    background-color: var(--col-white);
+    border: 1px solid var(--col-grey);
+    box-shadow: 5px 5px 10px var(--col-dark);
+    margin: 1rem auto;
+}
+
+#settings-field {
+    flex-grow: 1;
+}
