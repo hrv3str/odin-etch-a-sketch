@@ -28,20 +28,9 @@ The Etch-a-Sketch game allows users to draw on a virtual canvas using their mous
 5. To start a new drawing, click the "Reset" button.
 
 ## Project Structure
-
-The project structure is as follows:
-
-etch-a-sketch/
-├── index.html
-├── css/
-│ └── style.css
-└── js/
-└── script.js
-
-
 - `index.html`: The main HTML file that contains the game interface.
-- `css/style.css`: The CSS file for styling the game interface.
-- `js/script.js`: The JavaScript file that implements the game logic and interactivity.
+- `style.css`: The CSS file for styling the game interface.
+- `scripts/script.js`: The JavaScript file that implements the game logic and interactivity.
 
 ## Credits
 
