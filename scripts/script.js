@@ -3,7 +3,7 @@ const sketchField = document.getElementById("sketch-field"); // Value stores the
 let cellColor = '#bb00ff'; //Value got from the color picker
 let squareQuantity = 256; // Quantity of squares in grid
 let colorMode = 'standart'; // Value stores the color mode
-
+let grid = sketchField.childNodes; // Nodelist of all squares in sketchField
 /*Draw squares script*/
 
 function drawSquares(squareQuantity) {
@@ -14,10 +14,12 @@ function drawSquares(squareQuantity) {
     cell.style.width = `${height / fieldSize - 0.5}px`;
     cell.style.backgroundColor = '#c4bbf0';
     sketchField.appendChild(cell);
+    grid = sketchField.childNodes;
   }
 };
 
 drawSquares(squareQuantity);
+listenGrid(grid);
 
 /* Clear field script*/
 
@@ -27,6 +29,44 @@ while (sketchField.firstChild) {
 }
 };
 
+/*Painting squares*/
+
+function paintStandart(targetCell) {
+  targetCell.style.backgroundColor = cellColor;
+}
+
+function paintGrayscale(targetCell) {
+  let randomOp = Math.floor(Math.random() * 11) * 10;
+  targetCell.style.backgroundColor = `hsl(0 0% ${randomOp}%`;
+}
+
+function paintRaibow(targetCell) {
+  let randomR = Math.floor(Math.random() * 256);
+  let randomB = Math.floor(Math.random() * 256);
+  let randomG = Math.floor(Math.random() * 256);
+  targetCell.style.backgroundColor = `rgb(${randomR}, ${randomB}, ${randomG})`;
+}
+
+function erase(targetCell) {
+  targetCell.style.backgroundColor = '#c4bbf0';
+}
+
+function paint(targetCell) {
+  switch(colorMode) {
+    case "standart":
+      paintStandart(targetCell);
+      break;
+    case "grayscale":
+      paintGrayscale(targetCell);
+      break;
+    case "rainbow":
+      paintRaibow(targetCell);
+      break;
+    case "eraser":
+      erase(targetCell);
+      break;
+  }
+}
 
 /*Size-slider script*/
 
@@ -39,6 +79,8 @@ sizeSlider.addEventListener("input", function() {
   sizeSliderValue.textContent = `${fieldSize} x ${fieldSize}`;
   clearField();
   drawSquares(squareQuantity);
+  grid = sketchField.childNodes;
+  listenGrid(grid);
   console.log(`Field size is ${fieldSize}.`);
 });
 
@@ -62,8 +104,45 @@ for (let radio of colorSwitch) {
     if (radio.checked) {
       colorMode = radio.value;
       console.log(`Color mode changed to ${colorMode}`);
+        if (colorMode === 'reboot') {
+          setTimeout(clearField(), 2000);
+          drawSquares(squareQuantity);
+          grid = sketchField.childNodes;
+          listenGrid(grid);
+          colorSwitch[0].checked = true;
+          colorMode = 'standart';
+        }
     }
   });
 }
 
+/*Cell listener*/
 
+function listenGrid(grid) {
+  let isMouseDown = false;
+  let targetCell;
+  grid.forEach(cell => {
+    cell.addEventListener('mouseover', event => {
+      if (isMouseDown) {
+        targetCell = event.target;
+        paint(targetCell);
+      }
+    });
+    cell.addEventListener('click', event => {
+      targetCell = event.target;
+      paint(targetCell);
+    });
+  });
+  document.addEventListener('mousedown', () => isMouseDown = true);
+  document.addEventListener('mousemove', event => {
+    if (isMouseDown) {
+      let hoveredCell = document.elementFromPoint(event.clientX, event.clientY);
+      let isHoveredCellInGrid = [...grid].includes(hoveredCell);
+      if (isHoveredCellInGrid) {
+        targetCell = hoveredCell;
+        paint(targetCell);
+      }
+    }
+  });
+  document.addEventListener('mouseup', () => isMouseDown = false);
+}
