@@ -13,17 +13,18 @@ function drawSquares(squareQuantity) {
     cell.style.height = `${height / fieldSize - 0.5}px`;
     cell.style.width = `${height / fieldSize - 0.5}px`;
     cell.style.backgroundColor = '#c4bbf0';
+    cell.style.boxShadow = '0px 0px 2px #c4bbf0';
     sketchField.appendChild(cell);
     grid = sketchField.childNodes;
   }
 };
 
-drawSquares(squareQuantity);
-listenGrid(grid);
+drawSquares(squareQuantity); //Puts cells in grid
+listenGrid(grid); //Adds listeners to the cells
 
 /* Clear field script*/
 
-function clearField() { //removes all children of 'sketchField
+function clearField() { //removes all children of 'sketchField'
 while (sketchField.firstChild) {
   sketchField.removeChild(sketchField.firstChild);
 }
@@ -31,27 +32,31 @@ while (sketchField.firstChild) {
 
 /*Painting squares*/
 
-function paintStandart(targetCell) {
+function paintStandart(targetCell) { //Paints cell with chosen color
   targetCell.style.backgroundColor = cellColor;
+  targetCell.style.boxShadow = `0px 0px 4px ${cellColor}`;
 }
 
-function paintGrayscale(targetCell) {
+function paintGrayscale(targetCell) { //Paints cell with random grayscale color
   let randomOp = Math.floor(Math.random() * 11) * 10;
-  targetCell.style.backgroundColor = `hsl(0 0% ${randomOp}%`;
+  targetCell.style.backgroundColor = `hsl(0 0% ${randomOp}%)`;
+  targetCell.style.boxShadow = `0px 0px 4px hsl(0 0% ${randomOp}%)`;
 }
 
-function paintRaibow(targetCell) {
+function paintRaibow(targetCell) { //paints cell with random color
   let randomR = Math.floor(Math.random() * 256);
   let randomB = Math.floor(Math.random() * 256);
   let randomG = Math.floor(Math.random() * 256);
   targetCell.style.backgroundColor = `rgb(${randomR}, ${randomB}, ${randomG})`;
+  targetCell.style.boxShadow = `0px 0px 4px rgb(${randomR}, ${randomB}, ${randomG})`;
 }
 
-function erase(targetCell) {
+function erase(targetCell) { //Paints cell with the default color
   targetCell.style.backgroundColor = '#c4bbf0';
+  cell.style.boxShadow = '0px 0px 2px #c4bbf0';
 }
 
-function paint(targetCell) {
+function paint(targetCell) { //Switch depending on chosen color mode
   switch(colorMode) {
     case "standart":
       paintStandart(targetCell);
@@ -105,7 +110,7 @@ for (let radio of colorSwitch) {
       colorMode = radio.value;
       console.log(`Color mode changed to ${colorMode}`);
         if (colorMode === 'reboot') {
-          setTimeout(clearField(), 2000);
+          clearField();
           drawSquares(squareQuantity);
           grid = sketchField.childNodes;
           listenGrid(grid);
