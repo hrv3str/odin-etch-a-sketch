@@ -1,7 +1,8 @@
 let fieldSize = 16; // Value got from the size slider
 const sketchField = document.getElementById("sketch-field"); // Value stores the sketch-field div
 let cellColor = '#bb00ff'; //Value got from the color picker
-let squareQuantity = 256; // Quantity of squares to draw
+let squareQuantity = 256; // Quantity of squares in grid
+let colorMode = 'standart'; // Value stores the color mode
 
 /*Draw squares script*/
 
@@ -19,7 +20,8 @@ function drawSquares(squareQuantity) {
 drawSquares(squareQuantity);
 
 /* Clear field script*/
-function clearField() {
+
+function clearField() { //removes all children of 'sketchField
 while (sketchField.firstChild) {
   sketchField.removeChild(sketchField.firstChild);
 }
@@ -50,5 +52,18 @@ colorPicker.addEventListener("input", function() {
   colorPickerValue.textContent = cellColor;
   console.log(`Picked color ${cellColor}.`);
 });
+
+/*Color mode switch*/
+
+const colorSwitch = document.getElementsByName("scheme-selector");
+
+for (let radio of colorSwitch) {
+  radio.addEventListener('change', () => {
+    if (radio.checked) {
+      colorMode = radio.value;
+      console.log(`Color mode changed to ${colorMode}`);
+    }
+  });
+}
 
 
